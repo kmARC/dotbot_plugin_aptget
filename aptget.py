@@ -83,6 +83,9 @@ class AptGet(dotbot.Plugin):
         cmd = ['add-apt-repository', '--yes', source]
         try:
             out = subprocess.check_output(cmd)
+            self._apt_cache.update()
+            self._apt_cache.open()
+            self._apt_cache.commit()
             self._log.info('Successfully added PPA "%s"' % source)
             success = True
         except subprocess.CalledProcessError as e:
